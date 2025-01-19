@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Book: Sistem Kontrol Pneumatik</title>
+    <!-- Link ke styles.css -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Manual Book: Sistem Kontrol Pneumatik dengan PLC</h1>
+        <nav>
+            <ul>
+                <li><a href="#deskripsi">Deskripsi Sistem</a></li>
+                <li><a href="#komponen">Komponen Utama</a></li>
+                <li><a href="#cara-kerja">Cara Kerja Sistem</a></li>
+                <li><a href="#wiring">Wiring Diagram</a></li>
+                <li><a href="#program">Pemrograman PLC</a></li>
+                <li><a href="#troubleshooting">Troubleshooting</a></li>
+                <li><a href="#alur">Diagram Alur Proses</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="deskripsi" class="fade-in">
+            <h2>1. Deskripsi Sistem</h2>
+            <p>Sistem ini dirancang untuk mengontrol pergerakan 
+                dua silinder pneumatik menggunakan PLC, solenoid, 
+                dan sensor metal. Cylinder 1 dan Cylinder 2 bekerja 
+                secara terkoordinasi untuk menyelesaikan proses 
+                dengan pengaturan waktu tertentu.</p>
+        </section>
+        <section id="komponen" class="fade-in">
+            <h2>2. Komponen Utama</h2>
+            <ul>
+                <li><strong>PLC:</strong> 1. PLC (Programmable Logic Controller)
+                    Fungsi: Mengontrol seluruh sistem berdasarkan logika yang diprogram.
+                    Model: [Isi model PLC yang digunakan].</li>
+                <li><strong>Solenoid Valve:</strong> Solenoid 1: Mengontrol pergerakan Cylinder 1.
+
+                    Solenoid 2: Mengontrol pergerakan Cylinder 2.
+                    </li>
+                <li><strong>Silinder Pneumatik:</strong> Cylinder 1: Bergerak maju untuk memulai proses.
+
+                    Cylinder 2: Bergerak maju dan mundur sesuai perintah PLC.</li>
+                <li><strong>Sensor Metal:</strong> Fungsi: Mendeteksi posisi Cylinder 1 untuk mengaktifkan langkah berikutnya.
+                </li>
+                <li><strong>Power Supply:</strong> Fungsi: Menyediakan daya untuk PLC dan solenoid</li>
+                <li><strong>Timer Internal PLC:</strong> Fungsi: Mengatur jeda waktu antar langkah.</li>
+            </ul>
+        </section>
+        <section id="cara-kerja" class="fade-in">
+            <h2>3. Cara Kerja Sistem</h2>
+            <ol>
+                <li>Aktivasi awal: Saat sistem diaktifkan, PLC mengirimkan sinyal 
+                    HIGH ke Solenoid 1 (misalnya, melalui pin output 
+                    Q0.0) untuk menggerakkan Cylinder 1 maju.
+                </li>
+                <li>Trigger sensor: Cylinder 1 bergerak maju hingga memicu sensor 
+                    metal. Sensor metal mengirimkan sinyal ke PLC 
+                    melalui pin input (misalnya, I0.1).</li>
+                <li>Aktivasi Cylinder 2: Setelah menerima sinyal dari sensor metal, PLC 
+                    mengaktifkan Solenoid 2 (pin Q0.1) dengan jeda 
+                    waktu 3 detik untuk menggerakkan Cylinder 2 maju.</li>
+                <li>Gerakan Cylinder 2: Cylinder 2 bergerak maju selama 5 detik.
+
+                    Setelah itu, Cylinder 2 mundur selama 5 detik.</li>
+                <li>Reset Cylinder 1: Setelah Cylinder 2 selesai bergerak, PLC mengatur 
+                    Cylinder 1 untuk kembali ke posisi awal.
+                </li>
+            </ol>
+        </section>
+        <section id="wiring">
+            <h2>4. Wiring Diagram</h2>
+            <ol>
+                <li>Solenoid 1
+                    Pin output PLC Q0.0 → Solenoid 1 → Power Supply.                    
+                </li>
+                <li>Solenoid 2
+                    Pin output PLC Q0.1 → Solenoid 2 → Power Supply.</li>
+                <li>Sensor Metal
+                    Pin input PLC I0.1 → Sensor Metal → Power Supply.
+                    </li>
+                <li>Power Supply
+                    Daya 24V untuk PLC dan solenoid.
+                    </li>
+                <li>Timer Internal
+                    Dikontrol oleh program PLC.
+                </li>
+            </ol>
+        </section>
+        <section id="program">
+            <h2>5. Pemrograman PLC</h2>
+            <p>Program PLC dirancang menggunakan ladder diagram dengan langkah-langkah berikut:
+            </p>
+            <ol>
+                <li>Kirim sinyal HIGH ke Q0.0 untuk mengaktifkan Solenoid 1.</li>
+                <li>Tunggu sinyal dari I0.1 (sensor metal).</li>
+                <li>Aktifkan Q0.1 (Solenoid 2) dengan jeda waktu 3 detik menggunakan timer.</li>
+                <li>Atur timer untuk menggerakkan Cylinder 2 maju selama 5 detik dan mundur selama 5 detik.</li>
+                <li>Reset Cylinder 1 ke posisi awal dengan mematikan Q0.0.</li>
+            </ol>
+        </section>
+        <section id="troubleshooting">
+            <h2>6. Troubleshooting</h2>
+            <ul>
+                <li><strong>Cylinder tidak bergerak:</strong> Periksa koneksi wiring dan power supply.</li>
+                <li><strong>Sensor tidak mendeteksi:</strong> Pastikan sensor metal terpasang dengan benar.</li>
+                <li><strong>Timer tidak bekerja:</strong> Periksa program PLC untuk pengaturan waktu.</li>
+            </ul>
+        </section>
+        <section id="alur">
+            <h2>7. Diagram Alur Proses</h2>
+            <ol>
+                <li>Aktivasi sistem.</li>
+                <li>Cylinder 1 bergerak maju.</li>
+                <li>Sensor metal mendeteksi posisi Cylinder 1.</li>
+                <li>Cylinder 2 bergerak maju dan mundur.</li>
+                <li>Cylinder 1 kembali ke posisi awal.</li>
+            </ol>
+        </section>
+        <!-- Tambahkan elemen Modal -->
+        <section>
+            <button id="openModalButton">Buka Modal</button>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span id="closeModalButton" class="close">&times;</span>
+                    <p>Ini adalah isi modal Anda.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Manual Book</p>
+    </footer>
+    <!-- Link ke script.js -->
+    <script src="script.js"></script>
+</body>
+</html>
